@@ -1,0 +1,31 @@
+name: Go
+on: [push]
+jobs:
+
+  build:
+    name: Build&test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go:
+        - stable
+        - oldstable
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go }}
+      id: go
+
+    - name: Run
+      run: go run . -i a=1 b=2
+
+    - name: Run
+      run: go run .
+
+    - name: Run
+      run: go run . a=1 go run .
